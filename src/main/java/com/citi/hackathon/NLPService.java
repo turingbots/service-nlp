@@ -41,7 +41,7 @@ public class NLPService {
 	public NLPService(){
 		
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,depparse,natlog,openie");
+		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 		pipeline = new StanfordCoreNLP(props);
 		
 	}
@@ -88,23 +88,6 @@ public class NLPService {
 				
 				nlpOutput.add(output);
 			}
-
-			// this is the parse tree of the current sentence
-			Tree tree = sentence.get(TreeAnnotation.class);
-
-			Collection<RelationTriple> triples = sentence.get(NaturalLogicAnnotations.RelationTriplesAnnotation.class);
-			// Print the triples
-			for (RelationTriple triple : triples) {
-				log.debug(triple.confidence + "\t" +
-						triple.subjectLemmaGloss() + "\t" +
-						triple.relationLemmaGloss() + "\t" +
-						triple.objectLemmaGloss());
-			}
-
-			// this is the Stanford dependency graph of the current sentence
-			SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
-
-			
 
 		}
 
